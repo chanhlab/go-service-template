@@ -1,0 +1,59 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Run Linter
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.15.x
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Install golangci-lint
+        run: |
+          go get github.com/golangci/golangci-lint/cmd/golangci-lint
+      - name: Run linters
+        run: |
+          export PATH=$PATH:$(go env GOPATH)/bin
+          make lint
+
+  unit-test:
+    runs-on: ubuntu-latest
+    name: Run Unit Tests
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.15.x
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Run tests
+        run: make test
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{ env.CODECOV_TOKEN }}
+          file: ./coverage.out
+          flags: unittests
+          name: codecov-umbrella
+
+  test-dockerfile:
+    runs-on: ubuntu-latest
+    name: Test Dockerfile
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Image
+        run: make build_docker

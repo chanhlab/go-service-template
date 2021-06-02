@@ -1,0 +1,8 @@
+.git
+.vscode
+.env
+docker-env
+build
+__*
+Dockerfile
+Dockerfile.test
