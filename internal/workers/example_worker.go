@@ -13,8 +13,8 @@ type ExampleWorker struct {
 	concurrency int
 }
 
-// NewCredentialWorker create instance
-func NewCredentialWorker(manager *JobWorkers.Manager, queue string, concurrency int) *ExampleWorker {
+// NewExampleWorker create instance
+func NewExampleWorker(manager *JobWorkers.Manager, queue string, concurrency int) *ExampleWorker {
 	return &ExampleWorker{
 		Manager:     manager,
 		queue:       queue,

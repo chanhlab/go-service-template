@@ -31,14 +31,14 @@ func main() {
 		JobWorkers.Logger.Fatal(err)
 	}
 
-	// Register Credential Worker
-	workers.NewCredentialWorker(manager, "credential", workerPool).Register()
+	// Register Example Worker
+	workers.NewExampleWorker(manager, "example", workerPool).Register()
 
 	// producer := manager.Producer()
 	// Add a job to a queue
 	// i := 0
 	// for i < 10000 {
-	// 	producer.Enqueue("credential", "CredentialWorker", []int{i})
+	// 	producer.Enqueue("example", "ExampleWorker", []int{i})
 	// 	i++
 	// }
 
